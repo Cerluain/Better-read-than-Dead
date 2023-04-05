@@ -15,25 +15,25 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Book</th>
+          <th>Book Title</th>
           <th>Time Reading</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Row 1, Column 1</td>
-          <td>Row 1, Column 2</td>
+          <td>M&M's the Wrapper</td>
+          <td>28</td>
           <td><button class="add-row-btn">+</button></td>
         </tr>
         <tr>
-          <td>Row 2, Column 1</td>
-          <td>Row 2, Column 2</td>
+          <td>Never Gonna Give This Book Up</td>
+          <td>44</td>
           <td><button class="add-row-btn">+</button></td>
         </tr>
         <tr>
-          <td>Row 3, Column 1</td>
-          <td>Row 3, Column 2</td>
+          <td>What if everyone was gay?</td>
+          <td>0</td>
           <td><button class="add-row-btn">+</button></td>
         </tr>
         <tr>
@@ -56,31 +56,13 @@
         // Get the parent row of the clicked button
         var row = btn.parentNode.parentNode;
         
-        // Create a new row
-        var newRow = document.createElement('tr');
-        
-        // Create the first cell with the input element
-        var firstCell = document.createElement('td');
+        // Create a new input element
         var input = document.createElement('input');
-        input.type = 'text';
-        firstCell.appendChild(input);
-        newRow.appendChild(firstCell);
+        input.type = 'number';
         
-        // Create the second cell with the initial value of 0
-        var secondCell = document.createElement('td');
-        secondCell.classList.add('number');
-        secondCell.innerText = '0';
-        newRow.appendChild(secondCell);
-        
-        // Create the third cell with the submit button
-        var thirdCell = document.createElement('td');
+        // Create a new button to submit the value from the input
         var submitBtn = document.createElement('button');
         submitBtn.innerText = 'Submit';
-        thirdCell.appendChild(submitBtn);
-        newRow.appendChild(thirdCell);
-        
-        // Add the new row before the current row
-        row.parentNode.insertBefore(newRow, row);
         
         // Add a click event listener to the submit button
         submitBtn.addEventListener('click', function() {
@@ -88,7 +70,7 @@
           var inputValue = parseInt(input.value, 10);
           
           // Get the second column element of the row
-          var secondColumn = newRow.querySelector('.number');
+          var secondColumn = row.querySelector('.number');
           
           // Get the current number from the second column
           var currentNumber = parseInt(secondColumn.innerText, 10);
@@ -100,13 +82,75 @@
           secondColumn.innerText = newNumber.toString();
           
           // Remove the input element and submit button
-          newRow.removeChild(firstCell);
-          newRow.removeChild(thirdCell);
+          row.removeChild(input);
+          row.removeChild(submitBtn);
         });
+        
+        // Add the input and submit button to the row
+        row.appendChild(input);
+        row.appendChild(submitBtn);
       });
     });
-</script>
+  </script>
+  
+  <script>
+    // Get the submit button and input fields
+    var submitBtn = document.querySelector('.submit-row-btn');
+    var bookInput = document.querySelector('tbody input[type="text"]');
+    var timeInput = document.querySelector('tbody input[type="number"]');
 
+    // Add a click event listener to the submit button
+    submitBtn.addEventListener('click', function() {
+      // Get the values from the input fields
+      var bookValue = bookInput.value;
+      var timeValue = timeInput.value;
+
+      // If no value is entered or if a non-number value is entered, set timeValue to 0
+      if (!timeValue || isNaN(timeValue)) {
+        timeValue = 0;
+      }
+
+      // Create a new row element
+      var newRow = document.createElement('tr');
+
+      // Create the two column elements for the new row
+      var bookColumn = document.createElement('td');
+      var timeColumn = document.createElement('td');
+      var addRowBtn = document.createElement('td');
+      var button = document.createElement('button');
+
+      // Set the text content of the column elements
+      bookColumn.innerText = bookValue;
+      timeColumn.innerText = timeValue;
+      button.classList.add('add-row-btn');
+      button.innerText = '+';
+      addRowBtn.appendChild(button);
+      // Create the button element for the new row
+      
+      
+
+      // Insert the column elements and button element into the new row
+      newRow.appendChild(bookColumn);
+      newRow.appendChild(timeColumn);
+      newRow.appendChild(addRowBtn);
+
+      // Get the last row element in the table
+      var lastRow = document.querySelector('tbody tr:last-of-type');
+
+      // Insert the new row above the last row if bookValue is not empty
+      if (bookValue.trim()) {
+        lastRow.parentNode.insertBefore(newRow, lastRow);
+      }
+
+      // Clear the input fields
+      bookInput.value = '';
+      timeInput.value = '';
+    });
+
+  </script>
+  
+  
+  
   
 
 </body>
