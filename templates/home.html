@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Bootstrap Example</h1>
+    <h2>Subheading</h2>
+    <p>Regular text.</p>
+    <p><span class="emphasized">Emphasized text.</span> Regular text.</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Book</th>
+          <th>Time Reading</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Row 1, Column 1</td>
+          <td>Row 1, Column 2</td>
+          <td><button class="add-row-btn">+</button></td>
+        </tr>
+        <tr>
+          <td>Row 2, Column 1</td>
+          <td>Row 2, Column 2</td>
+          <td><button class="add-row-btn">+</button></td>
+        </tr>
+        <tr>
+          <td>Row 3, Column 1</td>
+          <td>Row 3, Column 2</td>
+          <td><button class="add-row-btn">+</button></td>
+        </tr>
+        <tr>
+          <td><input type="text" placeholder="Enter book title"></td>
+          <td><input type="number" placeholder="Enter time reading"></td>
+          <td><button class="submit-row-btn">Submit</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Include Font Awesome Icons -->
+
+  <script>
+    // Get all the add-row-btn buttons
+    var addRowBtns = document.querySelectorAll('.add-row-btn');
+  
+    // Loop through the buttons and add a click event listener
+    addRowBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        // Get the parent row of the clicked button
+        var row = btn.parentNode.parentNode;
+        
+        // Create a new row
+        var newRow = document.createElement('tr');
+        
+        // Create the first cell with the input element
+        var firstCell = document.createElement('td');
+        var input = document.createElement('input');
+        input.type = 'text';
+        firstCell.appendChild(input);
+        newRow.appendChild(firstCell);
+        
+        // Create the second cell with the initial value of 0
+        var secondCell = document.createElement('td');
+        secondCell.classList.add('number');
+        secondCell.innerText = '0';
+        newRow.appendChild(secondCell);
+        
+        // Create the third cell with the submit button
+        var thirdCell = document.createElement('td');
+        var submitBtn = document.createElement('button');
+        submitBtn.innerText = 'Submit';
+        thirdCell.appendChild(submitBtn);
+        newRow.appendChild(thirdCell);
+        
+        // Add the new row before the current row
+        row.parentNode.insertBefore(newRow, row);
+        
+        // Add a click event listener to the submit button
+        submitBtn.addEventListener('click', function() {
+          // Get the value from the input element
+          var inputValue = parseInt(input.value, 10);
+          
+          // Get the second column element of the row
+          var secondColumn = newRow.querySelector('.number');
+          
+          // Get the current number from the second column
+          var currentNumber = parseInt(secondColumn.innerText, 10);
+          
+          // Add the input value to the current number
+          var newNumber = currentNumber + inputValue;
+          
+          // Update the second column with the new number
+          secondColumn.innerText = newNumber.toString();
+          
+          // Remove the input element and submit button
+          newRow.removeChild(firstCell);
+          newRow.removeChild(thirdCell);
+        });
+      });
+    });
+</script>
+
+  
+
+</body>
+</html>
