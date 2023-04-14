@@ -6,6 +6,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
 
+app = Flask(__name__)
+
+
 
 @app.route("/")
 @app.route("/home")
